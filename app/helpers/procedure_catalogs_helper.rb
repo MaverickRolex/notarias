@@ -1,0 +1,2 @@
+module ProcedureCatalogsHelper
+end

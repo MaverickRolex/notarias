@@ -1,0 +1,25 @@
+.btn.btn-default
+  = link_to "Nuevo Tramite", new_procedure_catalog_path
+  %br
+.container
+  .row
+    %table.index-table
+      %thead.head-table
+        %tr
+          %th ID
+          %th Nombre
+          %th ID creador
+          %th Version
+      %tbody.tbody-border
+        - @procedure.each do |procedure|
+          %tr
+            %td= procedure.id
+            %td= procedure.name
+            %td= procedure.creator_user_id
+            %td= procedure.version
+            %td
+              = link_to 'Ver', user_path(user)
+              = link_to 'Editar', edit_user_path(user)
+              = link_to 'Borrar', user_path(user), |
+                method: :delete,                   |
+                data: { confirm: '¿Eliminar?'}     |
