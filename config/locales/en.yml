@@ -1,14 +1,14 @@
 # Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
+# and are automatically loaded by Rails. If you want to use locales 
 # than English, add the necessary files in this directory.
 #
 # To use the locales, use `I18n.t`:
 #
 #     I18n.t 'hello'
 #
-# In views, this is aliased to just `t`:
+# In views, this is aliased to just `
 #
-#     <%= t('hello') %>
+#     <%= t('hello
 #
 # To use a different locale, set it with `I18n.locale`:
 #
@@ -18,60 +18,47 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  #session new
-  log_in_title: "Log in"
-  email: "E-mail"
-  login: "Login"
-  username: "Username"
-  password: "Password"
-  remember_me: "Remember Account"
-  log_in_button: "Log in"
-  #User shared links
-  sign_up: "Sign up"
-  forgot_password: "Forgot your password?"
+  actions: "Actions"
+  cant_perform_this_action: "This task can not be performed on the active user!"
+  catalogs: "Catalogs"
   confirmation_instructions: "Didn't receive confirmation instructions?"
   confirm_unlock_instructions: "Didn't receive unlock instructions?"
-  sign_in_with: "Sign in with #{OmniAuth::Utils.camelize(provider)}"
-  #left_sidebar
   dashboard: "Dashboard"
-  users: "Users"
-  catalogs: "Catalogs"
-  #user_views
-  new_user: "New User"
-  edit_user: "Edit User"
-  name: "Name"
-  father_last_name: "Father Last Name"
-  mother_last_name: "Mother Last Name"
-  email: "E-Mail"
-  password: "Password"
-  password_confirmation: "Password_confirmation"
-  status: "Status"
-  actions: "Actions"
-  save: "Save"
-  registration: "Record"
-  return: "Return"
-  #actions
-  actions: "Actions"
-  show: "Show"
-  edit: "Edit"
   delete: "Delete"
-  masquerade_login: "Personify"
+  edit: "Edit"
+  edit_user: "Edit User"
+  father_last_name: "Father Last Name"
+  forgot_password: "Forgot your password?"
   lock: "Lock"
-  unlock: "Unlock"
   locked: "Locked"
-  unlocked: "Unlocked"
   lock_access: "User has been locked!"
-  unlock_access: "User has been lunocked!"
-  cant_perform_this_action: "This task can not be performed on the active user!"
-  #masquerade
+  login: "Login"
+  log_in_button: "Log in"
+  masquerade_login: "Personify"
   masquerade_message: "You are impersonating %{fullname}"
-  reverse_masquerade_link: ". logout."
-  #paginate
-  previous: "Previous"
+  mother_last_name: "Mother Last Name"
+  name: "Name"
+  new_user: "New User"
   next: "Next"
-  sign_out: "Sign Out"
-  profile: "Profile"
   no_authorizable_passed_as_argument: "There was no authorizable subject passed to build a permission"
   no_resource_passed_as_argument: "There was no resource passed to build a permission"
+  password: "Password"
+  password_confirmation: "Password_confirmation"
+  previous: "Previous"
+  profile: "Profile"
+  registration: "Record"
+  remember_me: "Remember Account"
+  return: "Return"
+  reverse_masquerade_link: ". logout."
+  save: "Save"
+  show: "Show"
+  sign_in_with: "Sign in with #{OmniAuth::Utils.camelize(provider)}"
+  sign_out: "Sign Out"
+  sign_up: "Sign up"
+  status: "Status"
+  unlock: "Unlock"
+  unlocked: "Unlocked"
+  unlock_access: "User has been lunocked!"
+  username: "Username"
+  users: "Users"
