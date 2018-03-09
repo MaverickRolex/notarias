@@ -35,9 +35,9 @@
         .p-1
           #groups
             = f.fields_for :user_groups do |user_group|
-              = render 'user_group_fields', f: user_group
+              = render 'user_group_fields', f: user_group, groups: @groups
             .links
-              = link_to_add_association 'add group', f, :user_groups
+              = link_to_add_association 'add group', f, :user_groups, { render_options: { locals: { groups: @groups } } }
       .d-flex.flex-column
         .p-1.action-buttons
           = f.submit t(:save), class: "btn btn-primary"

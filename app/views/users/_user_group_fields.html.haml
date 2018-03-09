@@ -2,5 +2,5 @@
   .field
     = f.hidden_field :user_id, value: current_user.id
     = f.label :groups_id
-    = f.select :groups, @groups.collect { |g| [g.name, g.id] }, {prompt: 'Select Group'}
+    = f.select :group, groups.collect { |g| [g.name, g.id] }, { prompt: 'Select Group' }
   = link_to_remove_association "remove group", f

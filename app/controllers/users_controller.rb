@@ -13,12 +13,12 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @user.user_groups.build
     @groups = Group.all
   end
 
   def edit
     @user = User.find(params[:id])
+    @groups = Group.all
   end
 
   def create
