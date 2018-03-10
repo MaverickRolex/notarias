@@ -1,5 +1,4 @@
-- if flash.present?
-  .row
-    - flash.each do |name, msg|
-      .col.marginless
-        = alert_colors_helper(name, msg)
+.row
+  - flash.each do |name, msg|
+    .col.marginless
+      = alert_colors_helper(name, msg)

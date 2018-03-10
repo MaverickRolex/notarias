@@ -28,4 +28,5 @@ $ ->
       $('#right-sidebar').removeClass 'show-right-sidebar'
     return
 
-  
+  $(".close-flash-message").click ->
+    $("#flash-mesagges").css("display", "none");

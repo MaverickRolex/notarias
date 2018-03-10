@@ -13,9 +13,9 @@
         = t('masquerade_message', fullname: current_user.full_name)
         = link_to t(:reverse_masquerade_link), back_masquerade_path(current_user)
         %a.fa.fa-times
-
   %body
-    = render "/layouts/flash_messages"
+    #flash-mesagges
+      = render "/layouts/flash_messages"
     #body-container
       - if user_signed_in?
         = render "/layouts/header"
