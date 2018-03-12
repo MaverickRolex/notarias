@@ -17,6 +17,7 @@ es:
   father_last_name: "Apellido Paterno"
   field_type: "Tipo de campo"
   forgot_password: "¿Olvidaste tu Contraseña?"
+  groups_assign: "Grupos Asignados"
   lock: "Bloquear"
   locked: "Bloqueado"
   lock_access: "El usuario ha sido bloqueado con exito"

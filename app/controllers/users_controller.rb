@@ -4,11 +4,12 @@ class UsersController < ApplicationController
   before_action :authorize!
 
   def index
-    @user = User.paginate(page: params[:page], per_page: 2)
+    @user = User.paginate(page: params[:page], per_page: 10)
   end
 
   def show
     @user = User.find(params[:id])
+    @groups = @user.groups
   end
 
   def new
@@ -32,7 +33,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-
     if @user.update(user_params)
       redirect_to users_path
     else
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).
       permit(:username, :email, :password, :password_confirmation, :name, :father_last_name, :mother_last_name, 
-              user_group_attributes: [:id, :user_id, :group_id])
+              user_groups_attributes: [:id, :user_id, :group_id, :_destroy])
   end
 
   def allow_without_password

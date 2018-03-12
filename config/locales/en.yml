@@ -34,6 +34,7 @@ en:
   email_or_username: "E-mail or Username"
   father_last_name: "Father Last Name"
   forgot_password: "Forgot your password?"
+  groups_assign: "Assigned Groups"
   lock: "Lock"
   locked: "Locked"
   lock_access: "User has been locked!"

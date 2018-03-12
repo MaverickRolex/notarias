@@ -1,44 +1,44 @@
 
 = form_for @user do |f|
-  .row
-    .col-md-6
-      %div.text-center
-        = image_tag "user.gif", class: "rounded-circle"
+  .form-group
+    .row
+      .col-md-6
+        %div.text-center
+          = image_tag "user.gif", class: "rounded-circle"
 
-      .form-group
+          .d-inline-flex.flex-row.justify-content-between
+            .p-1
+              = f.label t(:name), class: "label-padding"
+              = f.text_field :name, class: "field-boxes"
+            .p-1
+              = f.label t(:father_last_name), class: "label-padding"
+              = f.text_field :father_last_name, class: "field-boxes"
+            .p-1
+              = f.label t(:mother_last_name), class: "label-padding"
+              = f.text_field :mother_last_name, class: "field-boxes"
+          .d-inline-flex.flex-row.justify-content-between
+            .p-1
+              = f.label t(:username), class: "label-padding"
+              = f.text_field :username, class: "field-boxes"
+            .p-1
+              = f.label t(:email), class: "label-padding"
+              = f.text_field :email, class: "field-boxes"
+          .d-inline-flex.flex-row.justify-content-between
+            .p-1
+              = f.label t(:password), class: "label-padding"
+              = f.text_field :password, class: "field-boxes"
+            .p-1
+              = f.label t(:password_confirmation), class: "label-padding"
+              = f.text_field :password_confirmation, class: "field-boxes"
+      .col-md-6
         .d-inline-flex.flex-row.justify-content-between
           .p-1
-            = f.label t(:name), class: "label-padding"
-            = f.text_field :name, class: "field-boxes"
-          .p-1
-            = f.label t(:father_last_name), class: "label-padding"
-            = f.text_field :father_last_name, class: "field-boxes"
-          .p-1
-            = f.label t(:mother_last_name), class: "label-padding"
-            = f.text_field :mother_last_name, class: "field-boxes"
-        .d-inline-flex.flex-row.justify-content-between
-          .p-1
-            = f.label t(:username), class: "label-padding"
-            = f.text_field :username, class: "field-boxes"
-          .p-1
-            = f.label t(:email), class: "label-padding"
-            = f.text_field :email, class: "field-boxes"
-        .d-inline-flex.flex-row.justify-content-between
-          .p-1
-            = f.label t(:password), class: "label-padding"
-            = f.text_field :password, class: "field-boxes"
-          .p-1
-            = f.label t(:password_confirmation), class: "label-padding"
-            = f.text_field :password_confirmation, class: "field-boxes"
-    .col-md-6
-      .d-inline-flex.flex-row.justify-content-between
-        .p-1
-          #groups
-            = f.fields_for :user_groups do |user_group|
-              = render 'user_group_fields', f: user_group, groups: @groups
-            .links
-              = link_to_add_association 'add group', f, :user_groups, { render_options: { locals: { groups: @groups } } }
-      .d-flex.flex-column
-        .p-1.action-buttons
-          = f.submit t(:save), class: "btn btn-primary"
-          = link_to t(:return), users_path, class: "btn btn-secondary"
+            #groups
+              = f.fields_for :user_groups do |user_group|
+                = render 'user_group_fields', f: user_group, groups: @groups
+              .links
+                = link_to_add_association 'add group', f, :user_groups, { render_options: { locals: { groups: @groups } } }
+        .d-flex.flex-column
+          .p-1.action-buttons
+            = f.submit t(:save), class: "btn btn-primary"
+            = link_to t(:return), users_path, class: "btn btn-secondary"

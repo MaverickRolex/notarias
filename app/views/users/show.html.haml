@@ -25,11 +25,17 @@
       %strong= t(:email)
     %div
       = @user.email    
+    
     %div
-
       %strong= t(:username)
     %div
       = @user.username
+
+    %div
+      %strong= t(:groups_assign)
+    - @groups.each do |g|
+      %div
+        = g.name
 
     %div
       %strong= t(:status)
