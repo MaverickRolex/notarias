@@ -1,0 +1,49 @@
+@import "colors";
+
+.btn {
+  border-radius: 0 !important;
+  &:focus{
+    box-shadow: none !important;
+  }
+}
+
+.btn-group {
+  &:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none;
+  }
+}
+
+.btn-green {
+  background-color: $green-monochrom-5;
+  color: white;
+  &:hover {
+    color: $green-monochrom-5;
+    background-color: $system-mid-green;
+  }
+}
+
+.btn-green-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  text-align: inherit;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  text-decoration: none !important;
+  color: white;
+  &:hover { color: $green-monochrom-1; background-color: $green-monochrom-5; }
+  &:focus { background-color: $green-monochrom-5; }
+}
+.table-dropdown-menu {
+  border: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+  -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+  box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+}

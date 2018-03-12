@@ -1,11 +1,9 @@
-
 = form_for @user do |f|
   .form-group
     .row
       .col-md-6
         %div.text-center
           = image_tag "user.gif", class: "rounded-circle"
-
           .d-inline-flex.flex-row.justify-content-between
             .p-1
               = f.label t(:name), class: "label-padding"

@@ -22,6 +22,7 @@
 $left-menu-hidden-width: 50px;
 $left-menu-width: 200px;
 $left-menu-row-height: 50px;
+$top-menu-row-height: 50px;
 
 body, html {
   height: 100%;
@@ -32,16 +33,28 @@ body, html {
   width: 0%;
   height: 0px;
   visibility: none;
+  width: 100%;
   @include media-breakpoint-down(sm) {
-    background-color: $login-box-dark-blue;
+    background-color: $green-monochrom-5;
     visibility: visible; 
-    width: 100%;
-    height: 50px;
+    height: $top-menu-row-height;
+    -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+    -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+    box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
   }
   .menu-button {
-    visibility: hidden;
+    border-radius:0;
+    visibility: none;
+    display: none;
+    &:focus {
+      outline: none;
+      border: none;
+      box-shadow:none !important;
+    }
     @include media-breakpoint-down(sm) {
       visibility: visible;
+      height: 50px;
+      display: inline-block;
     }
   }
 }
@@ -54,8 +67,12 @@ body, html {
   #content, #content-with-menu {
     padding: 0;
     height: 100%;
-    //@include media-breakpoint-down(sm) { padding: 0; }
-    //width: 60%;
+  }
+  // reduce height when top menu is present
+  #content-with-menu {
+    @include media-breakpoint-down(sm) {
+      height: calc(100% - 50px);
+    }
   }
 
   #content-with-menu {
@@ -64,7 +81,7 @@ body, html {
 }
 
 .sidebar-container {
-  background-color: $login-box-dark-blue;
+  background-color: $green-monochrom-5;
   @include media-breakpoint-down(md) {
     width: 0px;
     overflow: hidden;
@@ -83,6 +100,9 @@ body, html {
     display: inline;
     position: absolute;
     height: 100%;
+    @include media-breakpoint-down(sm) {
+      height: calc(100% - 50px);
+    }
     @include sidebar-transition;
   }
   &#left-sidebar {
@@ -106,7 +126,10 @@ body, html {
       //font-family: courier, serif; 
       vertical-align: baseline;
     }
-    &:hover { background-color: $system-grey }
+    &:hover {
+      background-color: $system-mid-green;
+      span, i{ color: $green-monochrom-5; }
+    }
   }
   .profile-row { height: 75px; }
   #left-sidebar-content, #right-sidebar-content {

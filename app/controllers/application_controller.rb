@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
-  def authorize!(resource = self.class, action = nil)
+  def authorize!(resource = self.class, action: nil)
     Authorizer.new(current_user).authorize!(resource, action)
   end
 end
