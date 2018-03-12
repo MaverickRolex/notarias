@@ -35,6 +35,7 @@ en:
   father_last_name: "Father Last Name"
   forgot_password: "Forgot your password?"
   groups_assign: "Assigned Groups"
+  id: "ID"
   lock: "Lock"
   locked: "Locked"
   lock_access: "User has been locked!"
