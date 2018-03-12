@@ -1,6 +1,6 @@
 .nested-fields
   .field
-    = f.hidden_field :user_id, value: @user.id
+    = f.hidden_field :id 
     = f.label :group_id
     = f.select :group_id, groups.collect { |g| [g.name, g.id] }, { prompt: 'Select Group' }
   = link_to_remove_association "remove group", f
