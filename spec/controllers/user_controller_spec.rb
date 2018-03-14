@@ -30,7 +30,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "GET show" do
+  describe "#GET show" do
     it "returns a successful response" do
       get :show, params: { id: @user.id }
       expect(response).to be_success
@@ -52,7 +52,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "GET new" do
+  describe "#GET new" do
     it "returns a successful response" do
       get :new
       expect(response).to be_success
@@ -74,7 +74,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "GET edit" do
+  describe "#GET edit" do
     it "returns a successful response" do
       get :edit, params: { id: @user.id }
       expect(response).to be_success
@@ -96,7 +96,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "POST create" do
+  describe "#POST create" do
     it "returns a successful response" do
       expect{ post :create, params: { user: attributes_for(:user) }}.to change { User.count }.from(1).to(2)
     end
@@ -124,7 +124,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "PUT update" do
+  describe "#PUT update" do
     it "returns a user" do
         put :update,  params: { user: {username: @user.username }, id: @user.id }
         expect(assigns(:user)).to be_a(User)
@@ -180,7 +180,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "#POST lock" do
-    it "returns successful response" do
+    it "returns a successful response" do
         post :lock, params: { user:{ name: @user }, id: @user.id }
         expect(response).to be_redirect
     end
@@ -218,7 +218,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "#POST unlock" do
-    it "returns successful response" do
+    it "returns a successful response" do
       post :unlock, params: { user:{ name: @user }, id: @user.id }
       expect(response).to be_redirect
     end
