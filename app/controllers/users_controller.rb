@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authorize!
 
   def index
-    @user = User.paginate(page: params[:page], per_page: 10)
+    @users = User.paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path
     else
-      redirect_to edit_user_path(@user)
+      render :edit
     end
   end
 
