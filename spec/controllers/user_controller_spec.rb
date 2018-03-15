@@ -7,7 +7,7 @@ RSpec.describe UsersController, type: :controller do
     @permission = AuthorizationBuilder.new(resource:"UsersController", action: "manage", authorizable: @user)
     @permission.save
     sign_in @user
-  end 
+  end
 
   describe "#GET index" do
     it "returns a successful response" do
@@ -161,8 +161,8 @@ RSpec.describe UsersController, type: :controller do
       
     context "params[:password] and params[:password_confirmation]" do
       it "updates encrypted_password" do
-        expect { put :update,  params: { user: { password: "123456", password_confirmation: "123456" },id:@user.id }
-               }.to change { @user.reload.encrypted_password }
+        expect { put :update,  params: { user: { password: "123456", password_confirmation: "123456" },id:@user.id }}.
+          to change { @user.reload.encrypted_password }
       end
 
       it "doesn't update encrypted_password when blank" do
@@ -176,8 +176,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "#POST lock" do
-
-    it "redirige a index"do
+    it "redirects to index"do
       post :lock, params: { user:{ name: @user }, id: @user.id }
       expect(response).to redirect_to(users_path)
     end
@@ -211,7 +210,6 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "#POST unlock" do
-
     it "redirects to index"do
       post :unlock, params: { user:{ name: @user }, id: @user.id }
       expect(response).to redirect_to(users_path)
