@@ -84,7 +84,7 @@ RSpec.describe UsersController, type: :controller do
 
     it "retuns a user" do
       get :edit, params: { id: @user.id }
-      expect(assigns(:user)).to eql(@user)
+      expect(assigns(:user)).to be_a(User)
     end
 
     it "retuns the resquested user" do
@@ -95,7 +95,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "#POST create" do
     it "returns a successful response" do
-      expect{ post :create, params: { user: attributes_for(:user) }}.to change { User.count }.from(1).to(2)
+      expect{ post :create, params: { user: attributes_for(:user) } }.to change { User.count }.from(1).to(2)
     end
 
      it "redirects to 'index' if the user is created" do
@@ -104,12 +104,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "failure" do
-      it "returns 'new' if user record isn't saved" do
-        post :create,  params: { user: attributes_for(:user, username: "") }
-        expect(response).to render_template(:new)
-      end
-
-      it "returns new" do
+      it "renders 'new' if user record isn't saved" do
         post :create,  params: { user: attributes_for(:user, username: "") }
         expect(response).to render_template(:new)
       end
@@ -123,61 +118,54 @@ RSpec.describe UsersController, type: :controller do
 
   describe "#PUT update" do
     it "returns a user" do
-        put :update,  params: { user: {username: @user.username }, id: @user.id }
+        put :update,  params: { user: { username: @user.username }, id: @user.id }
         expect(assigns(:user)).to be_a(User)
     end
 
     it "updates user attribute" do
-      put :update,  params: { user: {username: @user,  }, id: @user.id }
+      put :update,  params: { user: { username: @user }, id: @user.id }
       expect{ @user.update(username: @user)}.to change {@user.username}
     end
 
     it "redirects to users index if the user record is updated" do
-        put :update,  params: { user: {username: "username" }, id: @user.id }
+        put :update,  params: { user: { username: "username" }, id: @user.id }
         expect(response).to redirect_to(users_path)
     end
 
-    it "renders a 200 http status" do
-        put :update,  params: { user: {username: "" }, id: @user.id }
+    it "returns a 200 http status" do
+        put :update,  params: { user: { username: "" }, id: @user.id }
         expect(response).to have_http_status(200)
     end
 
     context "failure" do
        it "renders edit if the record isn't saved" do
-        put :update,  params: { user: {username: "" }, id: @user.id }
+        put :update,  params: { user: { username: "" }, id: @user.id }
         expect(response).to render_template(:edit)
       end
 
       it "returns errors" do
-        put :update, params: { user: {username: ""}, id: @user.id}
+        put :update, params: { user: { username: ""}, id: @user.id}
         expect(assigns(:user).errors).not_to be_empty
-      end
-
-      it "renders edit" do
-        put :update,  params: { user: {username: "" }, id: @user.id }
-        expect(response).to render_template(:edit)
       end
     end
       
     context "params[:password] and params[:password_confirmation]" do
       it "updates encrypted_password" do
-        expect { put :update,  params: { user: { password: "123456", password_confirmation: "123456" },id:@user.id }}.
+        expect { put :update,  params: { user: { password: "123456", password_confirmation: "123456" }, id:@user.id } }.
           to change { @user.reload.encrypted_password }
       end
 
       it "doesn't update encrypted_password when blank" do
         expect { put :update,  params: { user: { 
                                                  password: nil, password_confirmation: nil, username: @user, email: @user
-                                               },id:@user.id
-                                       } 
-               }.to_not change { @user.reload.encrypted_password }
+                                               }, id:@user.id } }.to_not change { @user.reload.encrypted_password }
       end
     end
   end
 
   describe "#POST lock" do
     it "redirects to index"do
-      post :lock, params: { user:{ name: @user }, id: @user.id }
+      post :lock, params: { user: { name: @user }, id: @user.id }
       expect(response).to redirect_to(users_path)
     end
 
@@ -211,7 +199,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "#POST unlock" do
     it "redirects to index"do
-      post :unlock, params: { user:{ name: @user }, id: @user.id }
+      post :unlock, params: { user: { name: @user }, id: @user.id }
       expect(response).to redirect_to(users_path)
     end
 
