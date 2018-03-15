@@ -4,13 +4,10 @@ RSpec.describe UsersController, type: :controller do
 
   before(:each) do
     @user = create(:user)
-    @permiso = AuthorizationBuilder.new(resource:"UsersController", action: "manage", authorizable: @user)
-    @permiso.save
+    @permission = AuthorizationBuilder.new(resource:"UsersController", action: "manage", authorizable: @user)
+    @permission.save
     sign_in @user
   end 
-
-
-  it { expect execute_before_action :allow_without_password, only: [:update], via: [:put] }
 
   describe "#GET index" do
     it "returns a successful response" do
@@ -24,7 +21,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it "returns a list of 6 users" do
-    	create_list(:user, 5)
+      create_list(:user, 5)
       get :index
       expect(assigns(:users).count).to eql(6)
     end
@@ -43,7 +40,7 @@ RSpec.describe UsersController, type: :controller do
 
     it "returns a user" do
       get :show, params: { id: @user.id }
-      expect(assigns(:user)).to eql(@user)
+      expect(assigns(:user)).to be_a(User)
     end
 
     it "returns the requested user" do
@@ -69,7 +66,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it "retuns a new user record" do
-	    get :new
+      get :new
       expect(assigns(:user)).to be_new_record
     end
   end
@@ -164,7 +161,6 @@ RSpec.describe UsersController, type: :controller do
       
     context "params[:password] and params[:password_confirmation]" do
       it "updates encrypted_password" do
-        binding.pry
         expect { put :update,  params: { user: { password: "123456", password_confirmation: "123456" },id:@user.id }
                }.to change { @user.reload.encrypted_password }
       end
@@ -180,10 +176,6 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "#POST lock" do
-    it "returns a successful response" do
-        post :lock, params: { user:{ name: @user }, id: @user.id }
-        expect(response).to be_redirect
-    end
 
     it "redirige a index"do
       post :lock, params: { user:{ name: @user }, id: @user.id }
@@ -197,20 +189,21 @@ RSpec.describe UsersController, type: :controller do
         expect(@user2.reload.access_locked?).to be(true)
       end
 
-      it "returns 'cant use this action' :success flash message" do
+      it "returns can't use this action :success flash message" do
         @user2 = create(:user)
         post :lock, params: { id: @user2.id }
         expect(flash[:success]).to be_present
       end
 
       it "retuns a user" do
+        nepe = "hola estoy en la prueba"
         post :lock, params: { id: @user.id }
-        expect(assigns(:user)).to eql(@user2)
+        expect(assigns(:user)).to be_a(User)
       end
     end
 
     context "when current_user = user" do
-      it "returns 'cant use this action' :notic flash message" do
+      it "returns can't use this action :notice flash message" do
         post :lock, params: { id: @user.id }
         expect(flash[:notice]).to be_present
       end
@@ -218,10 +211,6 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "#POST unlock" do
-    it "returns a successful response" do
-      post :unlock, params: { user:{ name: @user }, id: @user.id }
-      expect(response).to be_redirect
-    end
 
     it "redirects to index"do
       post :unlock, params: { user:{ name: @user }, id: @user.id }
@@ -231,10 +220,10 @@ RSpec.describe UsersController, type: :controller do
     context "when current_user != user" do
       it "retuns a user" do
         post :unlock, params: { id: @user.id }
-        expect(assigns(:user)).to eql(@user2)
+        expect(assigns(:user)).to be_a(User)
       end
 
-      it "returns 'cant use this action' :success flash message" do
+      it "returns can't use this action :success flash message" do
         @user2 = create(:user)
         post :unlock, params: { id: @user2.id }
         expect(flash[:success]).to be_present
@@ -242,7 +231,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "when currnet_user = user" do
-      it "returns 'cant use this action' :alert flash message" do
+      it "returns can't use this action :alert flash message" do
         post :unlock, params: { id: @user.id }
         expect(flash[:alert]).to be_present
       end

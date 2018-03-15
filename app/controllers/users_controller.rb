@@ -47,9 +47,9 @@ class UsersController < ApplicationController
   #end
 
   def lock
-    user = User.find(params[:id])
-    if !(current_user == user)
-      user.lock_access!
+    @user = User.find(params[:id])
+    if !(current_user == @user)
+      @user.lock_access!
       flash[:success] = t(:lock_access)
     else
       flash[:notice] = t(:cant_perform_this_action)
@@ -58,9 +58,9 @@ class UsersController < ApplicationController
   end
 
   def unlock
-    user = User.find(params[:id])
-    if !(current_user == user)
-      user.unlock_access!
+    @user = User.find(params[:id])
+    if !(current_user == @user)
+      @user.unlock_access!
       flash[:success] = t(:unlock_access)
     else
       flash[:alert] = t(:cant_perform_this_action)
