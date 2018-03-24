@@ -6,12 +6,12 @@ default: &default
 
 development: 
   <<: *default 
-  database: notarias_development 
+  database: pvprep_development
 
 test:
   <<: *default 
-  database: notarias_test 
+  database: pvprep_test
 
 production: 
   <<: *default 
-  database: notarias_production
+  database: pvprep_production

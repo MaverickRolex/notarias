@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180226032035) do
+ActiveRecord::Schema.define(version: 20180316142747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+  end
+
+  create_table "candidacies", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "segment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -49,6 +56,21 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.index ["featurette_object", "authorizable_id", "authorizable_type", "action"], name: "index_permissions_on_featurette_and_authorizable_and_action", unique: true, using: :btree
   end
 
+  create_table "political_candidacies", force: :cascade do |t|
+    t.integer  "political_party_id"
+    t.integer  "candidacy_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "political_parties", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "coalition"
+    t.string   "parties_ids"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "preferences", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -68,6 +90,13 @@ ActiveRecord::Schema.define(version: 20180226032035) do
   end
 
   create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "segments", force: :cascade do |t|
+    t.integer  "parent_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -114,6 +143,13 @@ ActiveRecord::Schema.define(version: 20180226032035) do
   create_table "user_roles", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_segments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "segment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

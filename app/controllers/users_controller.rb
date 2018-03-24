@@ -2,9 +2,12 @@ class UsersController < ApplicationController
 
   before_action :allow_without_password, only: [:update]
   before_action :authorize!
+  before_action :load_groups, only: [:index, :update, :lock, :unlock]
+  before_action :load_users, only: [:index, :update, :lock, :unlock]
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 2)
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).paginate(:page => params[:page], :per_page => 5)
   end
 
   def show
@@ -33,11 +36,16 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to users_path
-    else
-      render :edit
+    begin
+      @user.update(user_params)
+    rescue ActiveRecord::RecordNotUnique => e
+      @user.user_groups.each do |ug|
+        ug.errors.add(:group_id, t(:cant_send_duplicates)) if ug.new_record?
+      end
+      flash[:error] = t(:errors_updating_the_user)
     end
+    flash[:notice] = t(:success_user_update) if flash[:error].blank? && @user.errors.empty?
+    render :index 
   end
 
   #def destroy
@@ -54,7 +62,7 @@ class UsersController < ApplicationController
     else
       flash[:notice] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    render :index
   end
 
   def unlock
@@ -65,10 +73,18 @@ class UsersController < ApplicationController
     else
       flash[:alert] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    render :index
   end
 
   private
+
+  def load_users
+    @users = User.paginate(page: params[:page], per_page: 5)
+  end
+
+  def load_groups
+    @groups = Group.all
+  end
 
   def user_params
     params.require(:user).

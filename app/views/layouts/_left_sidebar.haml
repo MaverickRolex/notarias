@@ -1,9 +1,10 @@
 #left-sidebar-content.d-flex.flex-column
-  = left_sidebar_link(t(:profile), edit_user_path(current_user), "user-circle", wrapper_options: { class: "profile-row"})
+  = left_sidebar_link(t(:profile), edit_profile_path(current_user), "user-circle", wrapper_options: { class: "profile-row"})
 
   = left_sidebar_link(t(:dashboard), root_path, "dashboard")
   = left_sidebar_link(t(:users), users_path , "users")
   = left_sidebar_link(t(:catalogs), procedure_catalogs_path , "book")
+  = left_sidebar_link(t(:segments), segments_path , "map")
 
   .mt-auto.d-flex.flex-column
     = left_sidebar_link(t(:sign_out), logout_path(current_user), "sign-out", wrapper_options: { class: "sidebar-bottom-link" }, method: :delete)

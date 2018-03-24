@@ -1,0 +1,74 @@
+= form_for @user, html: { id: "user-form" } do |f|
+  #user-form-actions.row
+    .col-8.col-md-12
+      %h3.text-truncate= @user.name
+    .col-4.d-block.d-md-none
+      #hide-user-mobile.btn.btn-primary.float-right= t(:back)
+      .clearfix
+    .col-12.separator
+    .col-12
+      = f.submit t(:save), class: "btn btn-primary float-right"
+      %a.btn.btn-primary.float-right{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+        = t(:actions)
+      .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+        = link_to user_path(@user), class: "btn-green-dropdown-item btn-green" do
+          = fa_icon(:eye)
+          = t(:show)
+        = link_to edit_user_path(@user), class: "btn-green-dropdown-item btn-green" do
+          = fa_icon(:edit)
+          = t(:edit)
+        - if current_user != @user
+          = link_to user_path(@user), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
+            = fa_icon(:trash)
+            = t(:delete)
+        - if current_user != @user
+          = link_to masquerade_path(@user), class: "btn-green-dropdown-item btn-green" do
+            .fa.fa-id-badge
+            = t(:masquerade_login)
+          = link_to lock_user_path(@user), method: :post, class: "btn-green-dropdown-item btn-green" do
+            .fa.fa-lock
+            = t(:lock)
+          = link_to unlock_user_path(@user), method: :post, class: "btn-green-dropdown-item btn-green" do
+            .fa.fa-unlock
+            = t(:unlock)
+      .clearfix
+
+  #user-form-content.row
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:name)
+        = f.text_field :name, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:father_last_name)
+        = f.text_field :father_last_name, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:mother_last_name)
+        = f.text_field :mother_last_name, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:username)
+        = f.text_field :username, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:email)
+        = f.text_field :email, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:password)
+        = f.text_field :password, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:password_confirmation)
+        = f.text_field :password_confirmation, class: "form-control"
+    .col-md-12.col-sm-12
+      .form-group#groups
+        %h4= t(:groups)
+        .row
+          = f.fields_for :user_groups do |user_group|
+            = render 'user_group_fields', f: user_group, groups: @groups
+          .col-md-12.col-sm-12.nested-fields.links.remove-group-link-wrapper
+            = link_to_add_association t(:add_group), f, :user_groups, render_options: { locals: { groups: @groups } }, class: "btn btn-primary float-right"
+            .clearfix
+  

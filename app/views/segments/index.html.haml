@@ -1,0 +1,18 @@
+.d-flex.flex-column.flex-table-wrapper-parent
+  .d-flex.flex-column.flex-table-wrapper
+    .index-table-wrapper
+      %table.table.index-table.table-hover.table-responsive-sm
+        %thead.thead-light.table-head
+          %tr
+            %th= :segment_id
+            %th= :parent_id
+            %th= t(:name)
+          %tbody.table-body
+            - @segments.each do |segment|
+              %tr
+                %td= segment.id
+                %td= segment.parent_id
+                %td= segment.name
+                %td
+                  .btn-primary
+                  = link_to t(:show), segment_path(segment)

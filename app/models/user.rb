@@ -11,7 +11,11 @@ class User < ApplicationRecord
   has_many :permissions, as: :authorizable
   has_many :featurettes, through: :permissions
   has_many :groups, through: :user_groups
-  has_many :user_groups
+  has_many :user_groups, inverse_of: :user
+  has_many :segments, through: :user_segments
+  has_many :user_segments
+  has_many :segments, through: :prep_processes
+  has_many :prep_processes
   
   validates :username, uniqueness: true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
