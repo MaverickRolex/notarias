@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :task_catalogs
   resources :procedure_catalogs
   resources :user_preferences
+  resources :segments, only: [:index, :show]
+  resources :profiles, only: [:edit, :update]
 
   # handles /
   get '', to: redirect("/#{I18n.locale}")

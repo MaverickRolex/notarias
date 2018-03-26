@@ -1,0 +1,61 @@
+.container-fluid#user-profile
+  = form_for @user, url: profile_path(@user), html: { id: "user-profile-form" } do |f|
+    .row
+      .col-12.col-md-6#user-profile-info
+        .row
+          .col.text-center
+            = image_tag "user.gif", class: "rounded-circle p-4"
+
+        .row
+          .col-12
+            #user-form-actions.row
+              .col-12
+                = f.submit t(:save), class: "btn btn-primary float-right"
+                .clearfix
+
+            #user-form-content.row
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:name)
+                  = f.text_field :name, class: "form-control"
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:father_last_name)
+                  = f.text_field :father_last_name, class: "form-control"
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:mother_last_name)
+                  = f.text_field :mother_last_name, class: "form-control"
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:username)
+                  = f.text_field :username, class: "form-control"
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:email)
+                  = f.text_field :email, class: "form-control"
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:password)
+                  = f.text_field :password, class: "form-control"
+              .col-md-6.col-sm-12
+                .form-group
+                  = f.label t(:password_confirmation)
+                  = f.text_field :password_confirmation, class: "form-control"
+
+      .separator.d-block.d-md-none
+
+      .col-12.col-md-6#user-profile-tabs
+        .row
+          .col-12
+            %ul#pills-tab.nav.nav-pills{ role: "tablist" }
+              %li.nav-item
+                %a#pills-groups-tab.nav-link.btn-primary.active{ href: "#groups-tab", role: "tab", data: { toggle: "pill" }, aria: { controls: "home", selected: "true" } }= t(:groups)
+          .col-12
+            #groups-tab.tab-pane.fade.show.active{ role: "tabpanel", aria: { labelledby: "groups-tab" } }
+              = f.fields_for :user_groups do |user_group|
+                = render 'user_group_fields', f: user_group, groups: @groups
+              #add-association-wrapper.row.nested-fields.links.remove-group-link-wrapper
+                .col-12
+                  = link_to_add_association t(:add_group), f, :user_groups, render_options: { locals: { groups: @groups } }, class: "btn btn-primary float-right", "data-association-insertion-node" => "#add-association-wrapper" 
+                  .clearfix

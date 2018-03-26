@@ -1,56 +1,32 @@
-.d-flex.flex-column.flex-table-wrapper-parent
-  .d-flex.flex-column.flex-table-wrapper
-    .index-table-actions
-      = link_to t(:new_user), new_user_path, class: "btn btn-primary"
-    .index-table-wrapper
-      %table.table.index-table.table-hover.table-responsive-sm
-        %thead.thead-light.table-head
-          %tr
-            %th= t(:id)
-            %th= t(:name)
-            %th.d-none.d-md-block.d-md-table-cell= t(:father_last_name)
-            %th.d-none.d-md-block.d-md-table-cell= t(:mother_last_name)
-            %th= t(:email)
-            %th.d-none.d-md-block.d-md-table-cell= t(:status)
-            %th= t(:actions)
-        %tbody.table-body
-          - @users.each do |user|
-            %tr
-              %td= user.id
-              %td= user.name
-              %td.d-none.d-md-block.d-md-table-cell= user.father_last_name
-              %td.d-none.d-md-block.d-md-table-cell= user.mother_last_name
-              %td= user.email
-              %td.d-none.d-md-block.d-md-table-cell
-                - if user.locked_at?
-                  = t(:locked)
-                - else
-                  = t(:unlocked)
-              %td
-                .dropdown.show
-                  %a#dropdown-menu-link.btn.btn-primary{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
-                    = t(:actions)
-                  .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
-                    = link_to user_path(user), class: "btn-green-dropdown-item btn-green" do
-                      = fa_icon(:eye)
-                      = t(:show)
-                    = link_to edit_user_path(user), class: "btn-green-dropdown-item btn-green" do
-                      = fa_icon(:edit)
-                      = t(:edit)
-                    - if current_user != user
-                      = link_to user_path(user), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
-                        = fa_icon(:trash)
-                        = t(:delete)
-                    - if current_user != user
-                      = link_to masquerade_path(user), class: "btn-green-dropdown-item btn-green" do
-                        .fa.fa-id-badge
-                        = t(:masquerade_login)
-                      = link_to lock_user_path(user), method: :post, class: "btn-green-dropdown-item btn-green" do
-                        .fa.fa-lock
-                        = t(:lock)
-                      = link_to unlock_user_path(user), method: :post, class: "btn-green-dropdown-item btn-green" do
-                        .fa.fa-unlock
-                        = t(:unlock)
-  %div.index-table-pagination-wrapper
-    = will_paginate(@users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-nav float-right', previous_label: t(:previous), next_label: t(:next))
-    %clearfix
+#users-index.container-fluid
+  #users-index-actions.row
+    .col-md-12
+      .p-2
+        = search_form_for @q do |f|
+          .input-group.mb-3
+            .input-group-prepend
+            = f.search_field( :name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+            = button_tag class: 'btn btn-outline-secondary' do
+              = fa_icon "search"
+
+  #users-index-content.row
+    #users-list.col-12.col-md-4.d-md-block{ class: @user ? "d-none" : "" }
+      .row#pagination
+
+      - @users.each do |user|
+        = link_to edit_user_path(user), class: "users-list-row row #{@user == user ? 'active' : '' }", data: { "user-id": user.id }, remote: true do
+          .col-3.image-wrapper
+            = image_tag "user.gif", alt: "AB", class: "rounded-circle"
+          .col-9
+            .row
+              .col-md-12
+                %strong= user.username
+                - if user.access_locked?
+                  %span.badge.badge-pill.badge-danger= t(:locked)
+              .col-md-12
+                .font-italic= user.email
+
+      
+    #user-info.col-12.col-md-8.d-md-block{ class: @user ? "" : "d-none" }
+      - if @user
+        = render "index_form"

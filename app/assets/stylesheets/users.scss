@@ -3,30 +3,103 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "colors";
 
-.right{
-  right: 30px;
-  padding: 10px;
-}
-
-#edit-title{
+#users-index {
   width: 100%;
-  text-align: center;
+  height: 100%;
 }
 
-.label-padding{
-  padding-left: 8px;
+#users-index #users-list {
+  width: 30%;
+  height: 100%;
+  .users-list-row {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-decoration: none;
+    color: black;
+    &:hover{ background-color: $pattens-blue; }
+    .image-wrapper{
+      @include media-breakpoint-down(sm) {
+        height: 4em;
+      }
+    }
+    img {
+      border: 1px solid $system-dark-green-transparent;
+      width: 100%;
+      height: 100%;
+      @include media-breakpoint-down(sm) {
+        width: 4em;
+        margin: auto;
+        display: block;
+      }
+    }
+    &.active {
+      border: 2px solid $system-dark-green-transparent;
+      background-color: $system-light-green;
+    }
+  }
 }
 
-.field-boxes{
-  width: 100%;
+#users-index #user-info {
+  width: 70%;
+  height: 100%;
+  border-left: 1px solid $system-dark-green-transparent;
+  overflow-y: scroll;
 }
-.padding-rigth-form{
-  padding-right: 50px;
+
+#users-index-actions, #users-index-breadcrumbs {
+  border-bottom: 1px solid $system-dark-green-transparent;
 }
-.no-padding-top-bot{
-  padding-top: 0px;
-  padding-bottom: 0px;
+
+#users-index-actions {
+  height: 10%;
 }
-.action-buttons{
-  margin-top: 10px;
+
+#users-index-breadcrumbs {
+  height: 10%;
 }
+
+#users-index-content {
+  height: 90%;
+}
+
+.index-table-pagination-wrapper {
+  height: 8%;
+}
+
+// User index table form
+
+#user-form {
+  min-height: 100%;
+  padding-top: 1em;
+}
+
+#user-form-content {
+  padding-top: 1em;
+  #groups { border-top: 1px solid $system-dark-green-transparent; padding-top: 1em;}
+  select { height: 50px; }
+  .remove-group-link-wrapper {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .group-select-wrapper {
+    margin-bottom: 1em;
+  }
+}
+#user-profile, #user-profile form {
+  min-height: 100%;
+}
+
+#user-profile {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+#user-profile-info, #user-profile-tabs {
+  min-height: 100%;
+}
+
+#user-profile-tabs .nav{
+  padding: 1em 0;
+}
+
+
