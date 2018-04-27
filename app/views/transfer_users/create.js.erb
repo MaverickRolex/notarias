@@ -1,0 +1,6 @@
+<% if @user_segments.any? { |user_segment| !user_segment.errors.blank? } %>
+  $.notify('No se pudo hacer la transferencia, contacte al servicio técnico', { globalPosition: "top center" });
+<% else %>
+  $.notify('Transferencia completa', { globalPosition: "top center", className: 'success' });
+  window.location.pathname = "<%= segment_path(@to_segment) %>"
+<% end %>

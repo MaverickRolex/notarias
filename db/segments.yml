@@ -1,0 +1,11 @@
+# Review yaml formating: http://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+
+- name: "Quintana Roo"
+  childtren: 
+    - name: "Othon P. Blanco"
+      children:
+        - name: "Distrito 14"
+    - name: "Benito Juarez"
+      children:
+    - name: "Carrillo Puerto"
+      children:

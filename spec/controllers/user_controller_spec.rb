@@ -223,4 +223,26 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe "search results" do
+    before(:each) do
+      create_list(:user, 5)
+    end
+    it "finds a users by name" do
+      get :search, params: { name: "user_name" }
+      expect(assigns_users).to include user_name_user
+    end
+    it "finds a user by name" do
+      @result = User.search(search: "father_last_name")
+      expect(@result.length).to eql(6)
+    end
+    it "finds a user by name" do
+      @result = User.search(search: "mother_last_name")
+      expect(@result.length).to eql(6)
+    end
+    it "finds a user by name" do
+      @result = User.search(search: "email")
+      expect(@result.length).to eql(6)
+    end
+  end
 end

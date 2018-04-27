@@ -1,0 +1,21 @@
+#users-index
+  #users-index-actions.row.no-gutters
+    = search_form_for @q, url: new_segment_representative_assignation_path(@segment), class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+      .input-group
+        = f.search_field(:name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+        = button_tag class: 'btn btn-outline-secondary' do
+          = fa_icon "search"
+        .clearfix
+
+    = link_to segment_path(@segment), class: "btn btn-primary col", id: "assign-users-link" do
+      = fa_icon('undo')
+      Regresar
+
+  .card.user-transfer-list-card
+    .card-header.user-transfer-list-card-header
+      %p 
+        Asigne usuarios a
+        %span.font-weight-bold= @segment.name
+        Dándo clic en los botones a la derecha de cada usuario
+    %ul.list-group.user-transfer-list
+      = render partial: "user", collection: @users

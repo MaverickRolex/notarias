@@ -1,0 +1,23 @@
+= form_for @step_two || @prep_process_machine.current_step, html: { class: "row prep-form" }, remote: true do |f|
+  #male-counter-icon.text-center.col-6
+    .row
+      .col-12.mb-3
+        %span#increase-male.d-inline-block.p-2.pl-4.pr-4.mr-3.btn.btn-outline-success= fa_icon('plus-circle')
+        %h1.text-info.d-inline-block= fa_icon('mars')
+        %span#decrease-male.d-inline-block.p-2.pl-4.pr-4.ml-3.btn.btn-outline-success= fa_icon('minus-circle')
+      .col-12
+        #male-counter.text-center
+          = f.number_field :males, id: "male-count-input"
+
+  #female-counter-icon.text-center.col-6
+    .row
+      .col-12.mb-3
+        %span#increase-female.d-inline-block.p-2.pl-4.pr-4.mr-3.btn.btn-outline-success= fa_icon('plus-circle')
+        %h1.text-info.d-inline-block= fa_icon('venus')
+        %span#decrease-female.d-inline-block.p-2.pl-4.pr-4.ml-3.btn.btn-outline-success= fa_icon('minus-circle')
+      .col-12
+        #female-counter.text-center
+          = f.number_field :females, id: "female-count-input"
+
+  .col-12.text-center.p-3
+    = f.submit t(:save), class: 'btn btn-primary'

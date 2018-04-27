@@ -1,0 +1,24 @@
+.overflow-scroll-container.h-100
+  = render 'messages'
+
+  #step-header.container-fluid.mt-3
+    .row
+      .col-7.col-md-9.col-lg-10
+        %h2= t("step_#{@prep_process_machine.prep_process.current_step}".to_sym)
+
+
+      - if @prep_process_machine.next_step_exist?
+        #next-step-wrapper.col-5.col-md-3.col-lg-2{ class: @prep_process_machine.prep_process.current_step > 1 ? "d-none" : "" }
+          = link_to next_segment_prep_process_path(@segment, @prep_process_machine.prep_process), method: :post, class: "btn btn-primary w-100", "data-confirm" => "¿Está seguro? Tendrá que contactar a su administrador si desea regresar al paso anterior" do
+            = t(:next)
+            = fa_icon("arrow-circle-right")
+      - elsif @prep_process_machine.last_step?
+        .col-5.col-md-3.col-lg-2
+          = link_to complete_segment_prep_process_path(@segment, @prep_process_machine.prep_process), class: "btn btn-primary w-100", "data-confirm" => "¿Está seguro? Tendrá que contactar a su administrador si desea regresar a algún paso anterior" do
+            = t(:finish)
+            = fa_icon("check-circle")
+
+  #step-content.container-fluid{ class: @prep_process_machine.step_string + '_selector' }
+    .row.h-100
+      .col-12.h-100
+        = render @prep_process_machine.step_string

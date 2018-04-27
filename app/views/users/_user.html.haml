@@ -1,0 +1,13 @@
+//TODO verify this Link_to
+= link_to "#", class: "users-list-row col-12 #{@user == user ? 'active' : '' }", data: { "user-id": user.id } do
+  .row.h-100
+    .col-3.image-wrapper
+      = image_tag "user.gif", alt: "AB", class: "rounded-circle"
+    .col-9
+      .row
+        .col-md-12
+          %strong= user.username
+          - if user.access_locked?
+            %span.badge.badge-pill.badge-danger= t(:locked)
+        .col-md-12
+          .font-italic= user.email

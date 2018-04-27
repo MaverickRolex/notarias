@@ -1,56 +1,51 @@
-.d-flex.flex-column.flex-table-wrapper-parent
-  .d-flex.flex-column.flex-table-wrapper
-    .index-table-actions
-      = link_to t(:new_user), new_user_path, class: "btn btn-primary"
-    .index-table-wrapper
-      %table.table.index-table.table-hover.table-responsive-sm
-        %thead.thead-light.table-head
-          %tr
-            %th= t(:id)
-            %th= t(:name)
-            %th.d-none.d-md-block.d-md-table-cell= t(:father_last_name)
-            %th.d-none.d-md-block.d-md-table-cell= t(:mother_last_name)
-            %th= t(:email)
-            %th.d-none.d-md-block.d-md-table-cell= t(:status)
-            %th= t(:actions)
-        %tbody.table-body
-          - @users.each do |user|
-            %tr
-              %td= user.id
-              %td= user.name
-              %td.d-none.d-md-block.d-md-table-cell= user.father_last_name
-              %td.d-none.d-md-block.d-md-table-cell= user.mother_last_name
-              %td= user.email
-              %td.d-none.d-md-block.d-md-table-cell
-                - if user.locked_at?
-                  = t(:locked)
-                - else
-                  = t(:unlocked)
-              %td
-                .dropdown.show
-                  %a#dropdown-menu-link.btn.btn-primary{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
-                    = t(:actions)
-                  .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
-                    = link_to user_path(user), class: "btn-green-dropdown-item btn-green" do
-                      = fa_icon(:eye)
-                      = t(:show)
-                    = link_to edit_user_path(user), class: "btn-green-dropdown-item btn-green" do
-                      = fa_icon(:edit)
-                      = t(:edit)
-                    - if current_user != user
-                      = link_to user_path(user), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
-                        = fa_icon(:trash)
-                        = t(:delete)
-                    - if current_user != user
-                      = link_to masquerade_path(user), class: "btn-green-dropdown-item btn-green" do
-                        .fa.fa-id-badge
-                        = t(:masquerade_login)
-                      = link_to lock_user_path(user), method: :post, class: "btn-green-dropdown-item btn-green" do
-                        .fa.fa-lock
-                        = t(:lock)
-                      = link_to unlock_user_path(user), method: :post, class: "btn-green-dropdown-item btn-green" do
-                        .fa.fa-unlock
-                        = t(:unlock)
-  %div.index-table-pagination-wrapper
-    = will_paginate(@users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-nav float-right', previous_label: t(:previous), next_label: t(:next))
-    %clearfix
+#users-index
+  #users-index-actions.row.no-gutters
+    = search_form_for @q, url: users_search_url, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+      .input-group
+        = f.search_field(:deleted_at_null, hidden: true)
+        = f.search_field(:deleted_at_not_null, hidden: true)
+        = f.search_field(:name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+        = button_tag class: 'btn btn-outline-secondary' do
+          = fa_icon "search"
+        .clearfix
+
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+      = t(:actions)
+
+    .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+      //TODO verify this link_to
+      - if @segment
+        = link_to segment_path(@segment), class: "btn-green-dropdown-item btn-green" do
+          = fa_icon('undo')
+          Regresar
+        = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
+          = fa_icon('exchange')
+          Transferir Usuarios
+        = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
+          = fa_icon("upload")
+          Importar Usuarios
+
+      = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
+        = fa_icon(:trash)
+        = t(:delete)
+
+      = link_to new_user_link_url, class: "btn-green-dropdown-item btn-green single-action-btn", data: { action: "delete" }, remote: true do
+        = fa_icon(:plus)
+        = t(:new_user)
+
+  #users-index-content.container-fluid
+    .row
+      #users-list.col-12.col-md-4.d-md-block.resource-list{ class: @user ? "d-none" : "" }
+        #users-filters.row
+          = link_to t(:active), users_index_filter_path({ deleted_at_null: 1 }, :deleted_at_not_null), class: "col-6 btn #{filter_active?(:deleted_at_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
+          = link_to t(:inactive), users_index_filter_path({ deleted_at_not_null: 1 }, :deleted_at_null), class: "col-6 btn #{filter_active?(:deleted_at_not_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
+        #users-pool.row
+          = render @users
+
+      #user-info.col-12.col-md-8.d-md-block.resource-info{ class: @user ? "" : "d-none" }
+        - if @user
+          = render "index_form"
+        - else
+          .row.align-items-center.h-100
+            .col
+              %h1.text-center= t(:select_one_or_more_elements)

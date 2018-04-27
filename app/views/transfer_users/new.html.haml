@@ -1,0 +1,31 @@
+.overflow-scroll-container.h-100
+  .container-fluid.mt-3
+    .row
+      .col
+        %h3 Transferencia de usuarios
+        %p Elije de donde a donde deseas transferir usuarios
+
+  .container-fluid.h-100
+    .row.h-100
+      .col-12.col-md-5.col-lg-5.h-50
+        .w-100.h-100.card
+          .card-header De donde deseas mover usuarios
+          .card-body#from-tree
+            = render @segments
+
+      .col-12.col-md-2.col-lg-2.h-10
+        %h1.text-center.d-none.d-md-block= fa_icon('arrow-right')
+        %h1.text-center.d-block.d-md-none= fa_icon('arrow-down')
+
+      .col-12.col-md-5.col-lg-5.h-50
+        .w-100.h-100.card
+          .card-header Hacia donde deseas moverlos
+          .card-body#to-tree
+            = render @segments
+
+      .col-12.mt-2
+        .row.justify-content-end.pl-3.pr-3
+          = link_to "#", class: "btn btn-primary col-12 col-md-4 col-lg-3", id: "transfer-users-select", "data-transfer-path" => select_transfer_users_path do
+            = fa_icon('exchange')
+            Transferir
+

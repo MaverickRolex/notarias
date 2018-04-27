@@ -1,0 +1,20 @@
+.container-fluid
+  .row
+    .col-12.mt-4
+      .card
+        .card-header
+          %h4 ¡Importación Completa!
+        .card-body
+          %ul.list-group
+            - @user_import_manager.completed_users.each do |completed_user|
+              %li.list-group-item.list-group-item-success
+                .row
+                  .col
+                    Correo:
+                    = completed_user.email
+                  .col
+                    Nombre:
+                    = completed_user.full_name
+                  .col
+                    Contraseña:
+                    = completed_user.pre_encrypted_password

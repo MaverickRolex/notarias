@@ -2,11 +2,16 @@
 
 // https://github.com/twbs/bootstrap-rubygem/blob/master/assets/stylesheets/bootstrap/_variables.scss
 // overrides for bootstrap variables
-$btn-padding-y: 1em;
-$btn-padding-x: 1.5em;
+$btn-padding-y: 0.75em;
+$btn-padding-x: 1em;
 $btn-border-radius: 0;
 
 $list-group-border-color: none;
+
+$link-color: $system-green;
+$link-decoration: none;
+$link-hover-color: darken($link-color, 15%);
+$link-hover-decoration: underline !default;
 
 $theme-colors: (
    "primary": $system-green,

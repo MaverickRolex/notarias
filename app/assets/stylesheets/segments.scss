@@ -1,0 +1,30 @@
+// Place all the styles related to the segments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#segments-index #segment-info {
+  width: 70%;
+  height: 100%;
+  border-left: 1px solid $system-dark-green-transparent;
+  overflow-y: scroll;
+}
+
+#segments-index-actions, #segments-index-breadcrumbs {
+  border-bottom: 1px solid $system-dark-green-transparent;
+}
+
+#usegments-index-actions {
+  height: 48px;
+  @include media-breakpoint-down(sm) { }
+}
+
+#segments-index-breadcrumbs {
+  height: 10%;
+}
+
+#segments-index-content {
+  height: calc(100% - 48px);
+  & > .row {
+    height: 100%;
+  }
+}

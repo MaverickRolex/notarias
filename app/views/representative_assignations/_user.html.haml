@@ -1,0 +1,14 @@
+%li.list-group-item.representative-assign-list-item{ "user-id" => user.id }
+  = user.full_name
+  - if user.represents_segment?(@segment)
+    %span.badge.badge-primary.badge-pill Administrador
+
+  - if user.represents_segment?(@segment)
+    = link_to segment_representative_assignation_path(@segment, user), class: "btn btn-secondary pull-right", method: :delete do
+      = fa_icon('times-circle')
+      Remover
+
+  - else
+    = link_to segment_representative_assignation_path(@segment, user), class: "btn btn-primary pull-right", method: :patch do
+      = fa_icon('check-circle')
+      Asignar

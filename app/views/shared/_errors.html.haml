@@ -1,0 +1,7 @@
+- if !record.errors.empty?
+  .row
+    .col
+      .alert.alert-danger
+        %ul
+          - record.errors.full_messages.each do |error|
+            %li= error
