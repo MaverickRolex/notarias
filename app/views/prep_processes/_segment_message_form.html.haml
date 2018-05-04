@@ -1,0 +1,13 @@
+= form_for [@segment, @segment_message], html: { class: "row h-75", 'data-ajax' => false } do |f|
+  .col-12
+    = f.text_area :message, class: "w-100", id: "step-one-textarea"
+  .col-12.pt-3
+    .row.justify-content-end
+      .col-md-3.col-12
+        = f.label :photo_evidence, id: "evidence-label", class: "btn btn-secondary w-100" do
+          = t(:evidence)
+          = fa_icon("camera")
+        = f.file_field :photo_evidence, accept: "image/*;cpature=camera", class: "d-none"
+      .col-md-3.col-12 
+        = f.submit t(:save), class: "btn btn-primary align-self-end w-100"
+

@@ -12,8 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
-//= require jquery3
 //= require popper
 //= require bootstrap-sprockets
 //= require cocoon
+//= require jquery-ui
+//= require jstree.min
+//= require notify
+//= require Chart.min
+//= require_tree .

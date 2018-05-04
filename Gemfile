@@ -4,8 +4,6 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
 # Use postgres as the database for Active Record 
@@ -20,7 +18,11 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
+gem 'carrierwave', '~> 1.0'
+# Roo implements read access for all common spreadsheet in Excelx, OpenOffice and CSV
+gem "roo", "~> 2.7.0"
+# Add Roo file format Excel xls
+gem 'roo-xls'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -30,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'jquery-ui-rails'
 
 gem "haml-rails"
 # Use Capistrano for deployment
@@ -42,11 +45,18 @@ gem 'activeadmin'
 #Use Bootstrap fot templates
 gem 'bootstrap', '~> 4.0.0'
 gem "font-awesome-rails"
-gem 'jquery-rails'
 gem 'pry'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'bootstrap-will_paginate'
 gem "cocoon"
+gem 'closure_tree'
+gem 'ransack'
+gem 'cancancan', '~> 2.0'
+# Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5, using much, much, much less code.
+gem "paranoia", "~> 2.2"
+gem 'humanize'
+gem "faker"
+gem 'chartjs-ror'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,27 @@
+.container-fluid
+  .row
+    .col-12
+      %h2 Importar Usuarios
+  .row
+    .col-12
+      = form_for @segment_user_import, url: segment_users_import_path(@segment, @segment_user_import), method: :patch do |f|
+        = f.file_field :file
+        = f.submit "Subir", class: "btn btn-primary"
+    .col-12.mt-4
+      - if @user_import_manager && @user_import_manager.errors.present?
+        .card
+          .card-header
+            %h4 Se encontraron los siguientes errores
+          .card-body
+            %ul.list-group
+              - @user_import_manager.errors.each do |error|
+                %li.list-group-item.list-group-item-danger= error
+              - if @user_import_manager.failed_user
+                %li.list-group-item.list-group-item-danger
+                  .row
+                    .col
+                      Correo:
+                      = @user_import_manager.failed_user.email
+                    .col
+                      Nombre:
+                      = @user_import_manager.failed_user.full_name

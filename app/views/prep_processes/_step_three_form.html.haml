@@ -1,0 +1,6 @@
+= form_for @prep_step_three || @prep_process_machine.current_step, html: { class: "row align-items-center prep-form" }, remote: true do |f|
+  #voters-count.col-12.col-sm-8.col-md-6.col-lg-6.mb-3
+    = f.number_field :voters_count, class: 'w-100'
+  .col
+  .col.col-12.col-sm-3.col-md-4.col-lg-3.mb-3
+    = f.submit t(:save), class: 'btn btn-primary w-100'

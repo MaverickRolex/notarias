@@ -1,0 +1,27 @@
+= form_for @segment, html: { id: "segment-form", class: "one-page-resource-form" } do |f|
+  #segment-form-actions.row
+    - if !@segment.new_record?
+      .col-12
+        %h3.text-truncate= @segment.name
+      .col-12.separator
+
+    .col-12
+      #hide-resource-mobile.btn.btn-primary.float-right.d-block.d-md-none= t(:back)
+      = f.submit t(:save), class: "btn btn-primary float-right"
+      - if !@segment.new_record?
+        .float-right
+          %a.btn.btn-primary.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+            = t(:actions)
+          .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+            - if current_user != @segment
+              = link_to segment_path(@segment), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
+                = fa_icon(:trash)
+                = t(:delete)
+      .clearfix
+  = render partial: '/shared/errors', locals: { record: @segment }
+
+  #segment-form-content.row
+    .col-md-12.col-sm-12
+      .form-group
+        = f.label t(:name)
+        = f.text_field :name, class: "form-control"

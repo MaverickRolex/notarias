@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180226032035) do
+ActiveRecord::Schema.define(version: 20180423022650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,29 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+  end
+
+  create_table "candidacies", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "candidates", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "political_party_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "evidences", force: :cascade do |t|
+    t.string   "file"
+    t.integer  "user_id"
+    t.integer  "segment_message_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["segment_message_id"], name: "index_evidences_on_segment_message_id", using: :btree
+    t.index ["user_id"], name: "index_evidences_on_user_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -49,6 +72,23 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.index ["featurette_object", "authorizable_id", "authorizable_type", "action"], name: "index_permissions_on_featurette_and_authorizable_and_action", unique: true, using: :btree
   end
 
+  create_table "political_candidacies", force: :cascade do |t|
+    t.integer  "candidacy_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "candidate_id"
+    t.integer  "segment_id"
+    t.index ["segment_id", "candidacy_id", "candidate_id"], name: "political_candidacies_by_assignations", unique: true, using: :btree
+  end
+
+  create_table "political_parties", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "coalition"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.text     "parties_ids", default: [],              array: true
+  end
+
   create_table "preferences", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -57,6 +97,52 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.integer  "field_type"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "prep_processes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "segment_id"
+    t.integer  "current_step"
+    t.datetime "completed_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "prep_step_fives", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["prep_process_id"], name: "index_prep_step_fives_on_prep_process_id", using: :btree
+  end
+
+  create_table "prep_step_fours", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.text     "data",            default: "{}"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "prep_step_ones", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "prep_step_threes", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.integer  "voters_count",    default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "prep_step_twos", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.integer  "males",           default: 0
+    t.integer  "females",         default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["females"], name: "index_prep_step_twos_on_females", using: :btree
+    t.index ["males"], name: "index_prep_step_twos_on_males", using: :btree
   end
 
   create_table "procedures", force: :cascade do |t|
@@ -68,6 +154,53 @@ ActiveRecord::Schema.define(version: 20180226032035) do
   end
 
   create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "priority"
+  end
+
+  create_table "segment_candidacies", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "candidacy_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["candidacy_id"], name: "index_segment_candidacies_on_candidacy_id", using: :btree
+    t.index ["segment_id", "candidacy_id"], name: "index_segment_candidacies_on_segment_id_and_candidacy_id", unique: true, using: :btree
+    t.index ["segment_id"], name: "index_segment_candidacies_on_segment_id", using: :btree
+  end
+
+  create_table "segment_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "segment_anc_desc_idx", unique: true, using: :btree
+    t.index ["descendant_id"], name: "segment_desc_idx", using: :btree
+  end
+
+  create_table "segment_messages", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "segment_message_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["segment_id"], name: "index_segment_messages_on_segment_id", using: :btree
+    t.index ["segment_message_id"], name: "index_segment_messages_on_segment_message_id", using: :btree
+    t.index ["user_id"], name: "index_segment_messages_on_user_id", using: :btree
+  end
+
+  create_table "segment_user_imports", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "uploader_id"
+    t.string   "file"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "status",      default: "incomplete"
+  end
+
+  create_table "segments", force: :cascade do |t|
+    t.integer  "parent_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -118,6 +251,14 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_segments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "segment_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.boolean  "representative"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "father_last_name"
@@ -134,6 +275,8 @@ ActiveRecord::Schema.define(version: 20180226032035) do
     t.inet     "last_sign_in_ip"
     t.datetime "locked_at"
     t.string   "username"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree

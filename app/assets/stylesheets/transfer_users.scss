@@ -1,0 +1,17 @@
+// Place all the styles related to the transfer_users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#from-tree {
+  overflow-y: scroll;
+}
+#to-tree {
+  overflow-y: scroll;
+}
+
+.user-transfer-list-item {
+  
+}
+
+.user-transfer-list, .user-transfer-list-card-header, .list-group.user-transfer-list, .user-transfer-list-item {
+  border-radius: 0 !important;
+}

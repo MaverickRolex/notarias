@@ -1,0 +1,23 @@
+#users-index
+  #users-index-actions.row.no-gutters
+    = search_form_for @q, url: users_search_url(@from_segment, @to_segment), class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+      .input-group
+        = f.number_field(:from_id, hidden: true, value: @from_segment.id)
+        = f.number_field(:to_id, hidden: true, value: @to_segment.id)
+        = f.search_field(:name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+        = button_tag class: 'btn btn-outline-secondary' do
+          = fa_icon "search"
+        .clearfix
+
+    = link_to "#", class: "btn btn-primary col", id: "transfer-users-link" , "data-path" => transfer_users_path(from_id: @from_segment.id, to_id: @to_segment.id) do
+      = fa_icon('exchange')
+      Transferir
+
+
+  .card.user-transfer-list-card
+    .card-header.user-transfer-list-card-header
+      %p 
+        Elija los usuarios para transferir a:
+        %span.font-weight-bold= @to_segment.name
+    %ul.list-group.user-transfer-list
+      = render partial: "user", collection: @users

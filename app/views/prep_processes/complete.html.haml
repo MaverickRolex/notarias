@@ -1,0 +1,18 @@
+.overflow-scroll-container.h-100
+  = render 'messages'
+
+  #step-header.container-fluid.mt-3
+    .row
+      .col
+        %h3 ¡Múchas gracias!
+        %p Si necesitas enviar alguna notificación, puedes acudir al espacio en la parte de abajo, podrás enviar notificaciones y fotografías para que tu administrador directo pueda ayudarte en cualquier situación que pueda presentarse.
+        %p
+          Puedes también ver cómo van las elecciones en este enlace
+          = link_to "Gráficas de las elecciones", "#"
+
+  #step-content.container-fluid
+    .row.h-100
+      .col-12.h-100
+        %h3 Enviar mensaje
+        = render 'segment_message_form'
+        

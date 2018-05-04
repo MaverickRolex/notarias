@@ -1,0 +1,6 @@
+<% if @users_with_errors.empty? %>
+$.notify('<%= @action_message %>', { globalPosition: "top center", className: 'success' });
+window.location = '/users'
+<% else %>
+$.notify('<%= @action_message %>', { globalPosition: "top" });
+<% end %>

@@ -1,0 +1,20 @@
+.container
+  .panel.panel-default
+
+    %div
+      %strong= :id
+    %div 
+      = @segment.id
+
+    %div
+      %strong= :parent_id
+    %div 
+      = @segment.parent_id
+
+    %div
+      %strong= t(:name)
+    %div 
+      = @segment.name
+
+.btn.btn-default
+  = link_to t(:return), segments_path

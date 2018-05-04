@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :group do
-    name "exist group name"
+    sequence(:name) { |n| "group name #{n}"}
   end
 end

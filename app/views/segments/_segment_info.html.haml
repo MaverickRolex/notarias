@@ -1,0 +1,33 @@
+.row
+  .col-12.pt-3.pb-2.mt-2
+    %h3.mb-0= @segment.name
+  /
+    .col-3.mt-2
+      .float-right
+        %a.btn.btn-primary.dropdown-toggle.d-block.d-md-none{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+          = t(:actions)
+        .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+       
+
+  .col-12.separator
+
+  .col-12
+    %h5 Candidatos
+  .col-12
+    %ul#pills-tab.nav.nav-pills.mb-3{role: "tablist"}
+      - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
+        %li.nav-item.pr-4
+          %a.nav-link.active{ id: "pills-#{candidacy.name}-tab",  "aria-controls" => "pills-#{candidacy.name}", "aria-selected" => "true", "data-toggle" => "pill", href: "#pills-#{candidacy.name}", role: "tab"}= candidacy.name
+
+    .separator
+    #pills-tabContent.tab-content
+      - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
+        .tab-pane.fade.show.active{id: "pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
+          = render partial: "candidacy_charts", locals: { candidacy: candidacy }
+
+          /
+            - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
+              .row
+                .col
+                  %p.text-success= political_candidacy.candidate.political_party.name
+                  %p.text-warning= political_candidacy.candidate.name

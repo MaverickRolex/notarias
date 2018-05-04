@@ -1,0 +1,7 @@
+<% if @prep_step_three.errors.empty? %>
+  $("#next-step-wrapper").removeClass("d-none");
+  $(".prep-form").replaceWith("<%= j render '/prep_processes/step_three_form' %>");
+  $.notify("Información guardada", { globalPosition: "top center", className: 'success' });
+<% else %>
+  $.notify("Hubo un error al guardar la información, por favor contacte a su administrador", { globalPosition: "top" });
+<% end %>

@@ -1,0 +1,21 @@
+= form_for [@segment, (@prep_step_four || @prep_process_machine.current_step)], html: { class: "row align-items-center prep-form" }, remote: true do |f|
+  .col
+  .col-12.col-sm-8.col-md-4.col-lg-3 
+    = f.submit t(:save), class: "btn btn-primary w-100"
+  - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
+    .col-12
+      .row
+        .col-12
+          %h3= candidacy.name
+        - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
+          .col-6.col-sm-4.col-md-3.col-lg-2.mb-3
+            .card
+              = image_tag "user.gif", class: "card-img-top"
+              .card-body
+                %h5.card-title= political_candidacy.candidate.political_party.name
+                %p.card-text= political_candidacy.candidate.name
+                = political_candidacy_input(political_candidacy)
+    .col-12.separator
+  .col
+  .col-12.col-sm-8.col-md-4.col-lg-3 
+    = f.submit t(:save), class: "btn btn-primary w-100"

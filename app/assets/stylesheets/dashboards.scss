@@ -35,7 +35,7 @@ body, html {
   visibility: none;
   width: 100%;
   @include media-breakpoint-down(sm) {
-    background-color: $green-monochrom-5;
+    background-color: $system-dark-green;
     visibility: visible; 
     height: $top-menu-row-height;
     -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
@@ -62,7 +62,7 @@ body, html {
 #body-container {
   height: 100%;
   //height: 90%;
-  background-color: $pattens-blue;
+  background-color: #fff;
 
   #content, #content-with-menu {
     padding: 0;
@@ -218,7 +218,7 @@ body, html {
 
   input[type="email"], input[type="password"], input[type="text"] {
     @include media-breakpoint-down(sm) { font-size: 1.2em; }
-    font-size: 1em;
+    font-size: 1.5em;
     border: none;
     background-color: $login-box-body-background;
     border-bottom: 1px solid  $system-dark-green;
@@ -244,16 +244,66 @@ body, html {
     &::-ms-input-placeholder { /* Microsoft Edge */ color: $login-box-grey; }
   }
   // Custom checkbox
-  .custom-checkbox {
-    padding:0;
-    color: $system-dark-green !important;
-    .custom-control-indicator { background-color: white; }
-    .custom-control-input:checked ~ .custom-control-indicator{
-      background-color: $login-box-green;
-    }
-    .custom-control-description {
-      padding-left: 24px;
-    }
+  .custom-checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 1em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: $system-dark-green;
+  }
+
+  /* Hide the browser's default checkbox */
+  .custom-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 5px;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .custom-checkbox-container input:checked ~ .checkmark {
+    background-color: $system-dark-green;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .custom-checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .custom-checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
   // we add this for the form to allow the absolute button to fix to the content
   form { 
@@ -281,7 +331,7 @@ body, html {
       right: -34px;
       overflow: hidden;
       @include fading-transition(0.1s);
-      span { display: none; color: $login-box-dark-blue;  }
+      span { display: none; color: white;  }
     }
     @include media-breakpoint-down(sm) {
       background-color: $login-box-submit-btn-hover;
@@ -309,3 +359,15 @@ body, html {
     cursor: pointer;
   }
 }
+
+.separator {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid $system-dark-green-transparent;
+}
+
+.one-page-resource-form {
+  min-height: 100%;
+  padding-top: 1em;
+}
+

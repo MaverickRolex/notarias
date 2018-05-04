@@ -14,8 +14,10 @@
 
           -if devise_mapping.rememberable?
             .field.p-3
-              .custom-control.custom-checkbox
-                = login_checkbox_tag(f)
+              %label.custom-checkbox-container
+                = t(:remember_me)
+                = check_box_tag("user[remember_me]", f.object.remember_me, f.object.remember_me)
+                %span.checkmark
 
           = render "users/shared/links"
 

@@ -1,0 +1,15 @@
+.row
+  .col-3
+    .nav.flex-column.nav-pills#v-pills-tab{ role: "tablist", "aria-orientation" => "vertical" }
+      %a.nav-link.active{ id: "v-pills-bar-tab", "data-toggle" => "pill", href: "#v-pills-bar", role: "tab", "aria-controls" => "v-pills-bar", "aria-selected" => "true" } Barras
+      %a#v-pills-pie-tab.nav-link{"aria-controls" => "v-pills-pie", "aria-selected" => "false", "data-toggle" => "pill", :href => "#v-pills-pie", :role => "tab"} Pay
+      %a#v-pills-scale-tab.nav-link{"aria-controls" => "v-pills-scale", "aria-selected" => "false", "data-toggle" => "pill", :href => "#v-pills-scale", :role => "tab"} Escala
+
+  .col-9
+    #v-pills-tabContent.tab-content
+      #v-pills-bar.tab-pane.fade.show.active{ "aria-labelledby" => "v-pills-bar-tab", :role => "tabpanel"}
+        = segment_bar_chart(candidacy)
+      #v-pills-pie.tab-pane.fade{"aria-labelledby" => "v-pills-pie-tab", :role => "tabpanel"}
+        = segment_pie_chart(candidacy)
+      #v-pills-scale.tab-pane.fade{"aria-labelledby" => "v-pills-scale-tab", :role => "tabpanel"}
+        = segment_line_chart(candidacy)
